@@ -20,4 +20,16 @@ export default class Recipe {
             alert(`Something went wrong :(`);
         }
     }
+
+    parseIngredients() {
+        const newIngredients = this.ingredients.map(el => {
+            // 1. Uniform units
+            // All units are already uniform
+
+            // 2. Remove Parenthesis
+            // No parenthesis are actually included
+
+            // 3. Parse ingredients into count, unit and ingredient
+        })
+    }
 }

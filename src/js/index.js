@@ -1,7 +1,8 @@
 import Search from './models/Search';
-import * as searchView from './views/searchView';
-import { elements, renderLoader, clearLoader } from './views/base';
 import Recipe from './models/Recipe';
+import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
+import { elements, renderLoader, clearLoader } from './views/base';
 
 /** Global state of the app
  * - Search Object
@@ -17,7 +18,7 @@ const state = {};
 
 const controlSearch = async () => {
     // 1. Get query from view
-    const query = searchView.getInput(); //TODO
+    const query = searchView.getInput();
     
     if (query) {
         // 2. New Search Object and add to state
@@ -48,6 +49,7 @@ elements.searchForm.addEventListener('submit', e => {
     controlSearch();
 });
 
+
 elements.searchResPages.addEventListener('click', e => {
     const btn = e.target.closest('.btn-inline');
     if (btn) {
@@ -69,21 +71,25 @@ const controlRecipe = async () => {
     
     if (id) {
         // Prepare UI for Changes
+        renderLoader(elements.recipe)
 
         // Create new Recipe Object
         state.recipe = new Recipe(id);
-
+        
         try {
 
             // Get recipe data
             await state.recipe.getRecipe();
             
             // Render recipe
-            console.log(state.recipe); 
+            clearLoader();
+            console.log(state.recipe);
+            recipeView.renderRecipe(state.recipe);
+
         } catch (err) {
-            alert('Error Processsing Recipe')
+            alert('No vex, the thing no work');
         }
     }
 }
 
-['haschange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
