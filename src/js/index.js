@@ -71,25 +71,44 @@ const controlRecipe = async () => {
     
     if (id) {
         // Prepare UI for Changes
-        renderLoader(elements.recipe)
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
+
+        //Highlight selected search Item
+        if (state.search) searchView.highlightSelected(id);
 
         // Create new Recipe Object
         state.recipe = new Recipe(id);
         
-        try {
+        // try {
 
-            // Get recipe data
-            await state.recipe.getRecipe();
-            
-            // Render recipe
-            clearLoader();
-            console.log(state.recipe);
-            recipeView.renderRecipe(state.recipe);
+        // Get recipe data
+        await state.recipe.getRecipe();
+        
+        // Render recipe
+        clearLoader();
+        recipeView.renderRecipe(state.recipe);
 
-        } catch (err) {
-            alert('No vex, the thing no work');
-        }
+        // } catch (err) {
+        //     alert('No vex, the thing no work');
+        // }
     }
 }
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+// Handling Recipe Button Clicks
+elements.recipe.addEventListener('click', e => {
+    if (e.target.matches('.btn-decrease, .btn-decrease *')) {
+        //Decrease button is clicked
+        if (state.recipe.servings > 1) {
+            state.recipe.updateServings('dec');
+            recipeView.updateServingsIngredients(state.recipe);
+        }
+    } else if (e.target.matches('.btn-increase, .btn-increase *')) {
+        //Increase button is clicked
+        state.recipe.updateServings('inc');
+        recipeView.updateServingsIngredients(state.recipe);
+    }
+    console.log(state.recipe);
+});

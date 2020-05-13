@@ -21,15 +21,15 @@ export default class Recipe {
         }
     }
 
-    parseIngredients() {
-        const newIngredients = this.ingredients.map(el => {
-            // 1. Uniform units
-            // All units are already uniform
+    updateServings (type) {
+        // Servings
+        const newServings = type === 'dec'? this.servings - 1 : this.servings + 1;
 
-            // 2. Remove Parenthesis
-            // No parenthesis are actually included
+        //Ingredients
+        this.ingredients.forEach(ing => {
+            ing.amount *= newServings/this.servings;
+        });
 
-            // 3. Parse ingredients into count, unit and ingredient
-        })
+        this.servings = newServings;
     }
 }

@@ -402,7 +402,7 @@ body {
   .recipe__ingredient-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 1.5rem;
+    grid-column-gap: 6rem;
     grid-row-gap: 2.5rem;
     list-style: none;
     margin-bottom: 3rem; }
