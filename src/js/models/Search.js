@@ -7,7 +7,7 @@ export default class Search {
     }
     async getResults (query) {
         try {
-            const res = await axios(`https://api.spoonacular.com/recipes/search?apiKey=${key}&query=${this.query}`);
+            const res = await axios(`https://api.spoonacular.com/recipes/search?apiKey=${key}&query=${this.query}&number=14`);
             this.results = res.data.results;
         } catch (error) {
             alert(error);

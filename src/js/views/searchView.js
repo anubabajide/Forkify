@@ -13,11 +13,11 @@ export const clearResults = () => {
 }
 
 export const highlightSelected = id => {
-    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    const resultsArr = Array.from(document.querySelectorAll('.results__link, .likes__link'));
     resultsArr.forEach(el => {
         el.classList.remove('results__link--active');
     });
-    document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
+    document.querySelector(`.results__link[href="#${id}"], .likes__link[href="#${id}"]`).classList.add('results__link--active');
 };
 
 const extractHostname = url => {
@@ -36,7 +36,7 @@ const extractHostname = url => {
     return hostname;
 }
 
-const limitRecipeTitle = (title, limit = 17, delim = ' ') => {
+export const limitRecipeTitle = (title, limit = 17, delim = ' ') => {
     const newTitle = [];
     if (title.length > limit) {
         title.split(delim).reduce((acc, cur, i, arr) => {
@@ -96,7 +96,7 @@ const renderButtons = (page, numResults, resPerPage) => {
     elements.searchResPages.insertAdjacentHTML('afterbegin', button);
 }; 
 
-export const renderResults = (recipes, page = 1, resPerPage = 3) => {
+export const renderResults = (recipes, page = 1, resPerPage = 7) => {
     const start = (page - 1) * resPerPage;
     const end = page * resPerPage;
     

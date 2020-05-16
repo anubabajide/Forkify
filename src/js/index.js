@@ -15,8 +15,6 @@ import { elements, renderLoader, clearLoader } from './views/base';
  * - Liked recipes
  */
 const state = {};
-window.state = state;
-likesView.toggleLikeMenu(state.likes? state.likes.getNumLikes() : 0);
 
 /*************************************************************************************  SEARCH CONTROLLER  *************************************************************************************/
 
@@ -197,3 +195,18 @@ const controlLike = () => {
     }
     likesView.toggleLikeMenu(state.likes.getNumLikes());
 }
+
+// Restore liked recipes on page reload
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+
+    //Restore Items
+    state.likes.readStorage();
+
+    //Toggle like menu button
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    //Render the existing 
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+
+})
